@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#013604] to-[#031400] text-white">
       <h1 className="text-4xl">
-        Salve!{" "}
+        Salve{" "}
         <span className="font-bold text-green-500">{session?.user.name}</span>
       </h1>
       <p className="mt-4 text-lg">

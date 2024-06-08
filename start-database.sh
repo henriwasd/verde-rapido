@@ -11,17 +11,17 @@
 
 DB_CONTAINER_NAME="verde-rapido-postgres"
 
-if ! [ -x "$(command -v podman)" ]; then
+if ! [ -x "$(command -v docker)" ]; then
   echo -e "Docker is not installed. Please install docker and try again.\nDocker install guide: https://docs.docker.com/engine/install/"
   exit 1
 fi
 
-if [ "$(podman ps -q -f name=$DB_CONTAINER_NAME)" ]; then
+if [ "$(docker ps -q -f name=$DB_CONTAINER_NAME)" ]; then
   echo "Database container '$DB_CONTAINER_NAME' already running"
   exit 0
 fi
 
-if [ "$(podman ps -q -a -f name=$DB_CONTAINER_NAME)" ]; then
+if [ "$(docker ps -q -a -f name=$DB_CONTAINER_NAME)" ]; then
   docker start "$DB_CONTAINER_NAME"
   echo "Existing database container '$DB_CONTAINER_NAME' started"
   exit 0
@@ -46,7 +46,7 @@ if [ "$DB_PASSWORD" = "password" ]; then
   sed -i -e "s#:password@#:$DB_PASSWORD@#" .env
 fi
 
-podman run -d \
+docker run -d \
   --name $DB_CONTAINER_NAME \
   -e POSTGRES_USER="postgres" \
   -e POSTGRES_PASSWORD="$DB_PASSWORD" \
