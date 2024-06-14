@@ -1,8 +1,12 @@
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 
-import { TRPCReactProvider } from "~/trpc/react";
+import { TRPCReactProvider } from "@/trpc/react";
+
+import { ClerkProvider } from "@clerk/nextjs";
+import { Menubar, MenubarMenu } from "@/components/ui/menubar";
+import { Profile } from "@/components/ui/profile";
 
 export const metadata = {
   title: "Verde Rápido",
@@ -16,10 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt" className={`${GeistSans.variable}`}>
-      <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="pt" className={`${GeistSans.variable}`}>
+        <body className="bg-gradient-to-b from-[#013604] to-[#031400] ">
+          <Menubar className="justify-end border-transparent bg-transparent text-white">
+            <MenubarMenu>
+              <Profile />
+            </MenubarMenu>
+          </Menubar>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
