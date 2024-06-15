@@ -20,7 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    >
       <html lang="pt" className={`${GeistSans.variable}`}>
         <body className="bg-gradient-to-b from-[#013604] to-[#031400] ">
           <Menubar className="justify-end border-transparent bg-transparent text-white">

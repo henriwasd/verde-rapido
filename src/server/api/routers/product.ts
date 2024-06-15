@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const productRouter = createTRPCRouter({
-  create: protectedProcedure
+  create: publicProcedure
     .input(
       z.object({
         name: z.string(),
@@ -26,7 +26,7 @@ export const productRouter = createTRPCRouter({
       });
     }),
 
-  update: protectedProcedure
+  update: publicProcedure
     .input(
       z.object({
         id: z.string(),
@@ -49,7 +49,7 @@ export const productRouter = createTRPCRouter({
       });
     }),
 
-  delete: protectedProcedure
+  delete: publicProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.product.delete({
@@ -57,7 +57,7 @@ export const productRouter = createTRPCRouter({
       });
     }),
 
-  get: protectedProcedure
+  get: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       return await ctx.db.product.findUnique({
@@ -65,7 +65,7 @@ export const productRouter = createTRPCRouter({
       });
     }),
 
-  list: protectedProcedure.query(async ({ ctx }) => {
+  list: publicProcedure.query(async ({ ctx }) => {
     return await ctx.db.product.findMany();
   }),
 });
